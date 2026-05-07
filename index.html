@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Codezilla 2026 | Tech Quest Arena</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <canvas id="bg-canvas"></canvas>
+    <div id="toast-container"></div>
+
+    <!-- Floating Support Button -->
+    <button id="support-btn" class="floating-btn">?</button>
+
+    <!-- Support Modal -->
+    <div id="support-modal" class="modal-overlay hidden">
+        <div class="modal-content cyber-panel">
+            <h2>HOST DETAILS</h2>
+            <ul class="support-list">
+                <li>1. Mohd. Faiz Raza (Class 11-C)</li>
+                <li>2. Satyam Sharma (Class 11-C)</li>
+                <li>3. Aarav Patel (Class 12-C)</li>
+                <li>4. Ansh Bhadauria (Class 12-C)</li>
+            </ul>
+            <button id="close-support-btn" class="cyber-btn outline" style="margin-top: 15px;">CLOSE</button>
+        </div>
+    </div>
+
+    <!-- Feedback Modal -->
+    <div id="feedback-modal" class="modal-overlay hidden">
+        <div class="modal-content cyber-panel" style="text-align: center;">
+            <h2>RATE YOUR EXPERIENCE</h2>
+            <p style="color: var(--text-muted); margin-bottom: 20px;">Website developed by <strong>Mohd. Faiz Raza (11 - C)</strong></p>
+            <div class="star-rating" id="star-rating">
+                <span class="star" data-value="1">★</span>
+                <span class="star" data-value="2">★</span>
+                <span class="star" data-value="3">★</span>
+                <span class="star" data-value="4">★</span>
+                <span class="star" data-value="5">★</span>
+            </div>
+            <button id="submit-feedback-btn" class="cyber-btn primary-glow" style="margin-top: 20px;">SUBMIT RATING</button>
+        </div>
+    </div>
+
+    <!-- Instruction Modal -->
+    <div id="instruction-modal" class="modal-overlay hidden">
+        <div class="modal-content cyber-panel">
+            <h2>MISSION BRIEFING 🚀</h2>
+            <div class="briefing-text">
+                <p><strong>[1]</strong> You have exactly 3 hours to clear the board.</p>
+                <p><strong>[2]</strong> Click a target mission from the left panel to load it.</p>
+                <p><strong>[3]</strong> Read the full briefing and write your Java code.</p>
+                <p><strong>[4]</strong> Click "Compile & Download" to secure your payload.</p>
+            </div>
+            <button id="start-mission-btn" class="cyber-btn primary-glow">ACKNOWLEDGE & ENTER</button>
+        </div>
+    </div>
+
+    <div id="app-container">
+        
+        <!-- LOGIN SCREEN -->
+        <div id="screen-login" class="screen active cyber-panel">
+            <h1 class="main-title">CODEZILLA</h1>
+            <p class="subtitle">TECH QUEST 2026 // ARENA LOGIN</p>
+            <div class="tabs">
+                <button id="btn-player-tab" class="tab active">PLAYER</button>
+                <button id="btn-admin-tab" class="tab">ADMIN</button>
+            </div>
+            
+            <form id="player-form" class="auth-form active">
+                <div class="input-group">
+                    <input type="text" id="player-name" placeholder="Agent Name (e.g. Faiz)" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')" required>
+                </div>
+                <div class="input-grid-2">
+                    <input type="text" id="player-class" placeholder="Class (e.g. 11)" oninput="this.value = this.value.replace(/[^0-9]/g, '')" required>
+                    <input type="text" id="player-section" placeholder="Section (e.g. C)" oninput="this.value = this.value.replace(/[^a-zA-Z]/g, '')" required>
+                </div>
+                <div class="input-group" style="margin-top: 15px;">
+                    <input type="text" id="scholar-no" placeholder="Scholar Number" oninput="this.value = this.value.replace(/[^0-9]/g, '')" required>
+                </div>
+                <button type="submit" class="cyber-btn primary-glow" style="margin-top: 15px;">INITIALIZE LINK</button>
+            </form>
+
+            <form id="admin-form" class="auth-form hidden">
+                <div class="input-group pass-wrapper">
+                    <input type="password" id="admin-pass" placeholder="Admin Override Key" required>
+                    <!-- Default Open Eye -->
+                    <button type="button" id="toggle-pass-btn" class="eye-btn">👁️</button>
+                </div>
+                <button type="submit" class="cyber-btn outline-glow" style="margin-top: 15px;">ACCESS MAINFRAME</button>
+            </form>
+        </div>
+
+        <!-- UPGRADED ADMIN DASHBOARD -->
+        <div id="screen-admin" class="screen cyber-panel hidden">
+            <header class="admin-header">
+                <h2><span class="neon-text">ADMIN</span> // MISSION CONTROL</h2>
+                <button class="cyber-btn outline" onclick="location.reload()">LOGOUT</button>
+            </header>
+            
+            <div class="admin-grid">
+                <div class="admin-window panel-border">
+                    <h3 id="admin-form-title">DEPLOY NEW MISSION</h3>
+                    <form id="add-question-form" class="admin-form-grid">
+                        <input type="hidden" id="edit-mission-id" value="">
+                        <input type="text" id="q-title" placeholder="Mission Title" required>
+                        <select id="q-category">
+                            <option value="Programmer">Level 1: Programmer (Easy)</option>
+                            <option value="Hacker">Level 2: Hacker (Moderate)</option>
+                            <option value="Developer">Level 3: Developer (Hardcore)</option>
+                        </select>
+                        <textarea id="q-desc" class="full-width" rows="4" placeholder="Full Question Description..." required></textarea>
+                        
+                        <button type="submit" id="submit-mission-btn" class="cyber-btn primary-glow full-width">DEPLOY TO ARENA</button>
+                        <button type="button" id="cancel-edit-btn" class="cyber-btn outline full-width hidden" style="margin-top: 10px;">CANCEL EDIT</button>
+                    </form>
+                </div>
+
+                <div class="admin-window panel-border">
+                    <h3>LIVE MISSIONS DEPLOYED</h3>
+                    <ul id="live-questions-list" class="mission-list"></ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- PLAYER ARENA -->
+        <div id="screen-arena" class="screen hidden">
+            <header class="arena-header cyber-panel">
+                <div class="agent-info">
+                    <span class="status-dot"></span>
+                    <span>AGENT: <strong id="user-display">UNKNOWN</strong></span>
+                    <span id="user-class-display" style="color: var(--text-muted); font-size: 0.9rem; margin-left: 10px;"></span>
+                </div>
+                <div class="timer-display" id="global-timer">03:00:00</div>
+            </header>
+
+            <div class="arena-layout">
+                <div class="mission-board cyber-panel">
+                    <h3>ACTIVE THREATS</h3>
+                    <div id="player-missions-container"></div>
+                </div>
+
+                <div class="terminal-wrapper cyber-panel">
+                    <div id="active-mission-banner" class="active-mission-box hidden">
+                        <h4 id="active-mission-title" class="neon-text">Select a mission from the board</h4>
+                        <p id="active-mission-desc">Awaiting selection...</p>
+                    </div>
+
+                    <div class="terminal-header">
+                        <div class="term-dots"><span></span><span></span><span></span></div>
+                        <span class="term-title">Codezilla_Terminal // workspace.java</span>
+                        <button id="save-btn" class="cyber-btn action-glow">DOWNLOAD PAYLOAD</button>
+                    </div>
+                    <div class="terminal-body">
+                        <textarea id="code-editor" spellcheck="false" placeholder="Select a mission to load terminal..."></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
