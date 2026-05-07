@@ -65,17 +65,29 @@ let missions = [
 ];
 let activeMissionId = null;
 
-// Modify the loadMissions function to NOT overwrite our hardcoded array if it's empty
+// The Load Function
 function loadMissions() {
     const saved = localStorage.getItem('codezilla_missions');
-    // We only load from storage if there are actually saved questions there
     if(saved && JSON.parse(saved).length > 0) { 
         missions = JSON.parse(saved); 
     } else {
-        // If storage is empty, it will just use our hardcoded array above!
         saveMissions(); 
     }
 }
+
+// THE MISSING SAVE FUNCTION
+function saveMissions() { 
+    localStorage.setItem('codezilla_missions', JSON.stringify(missions)); 
+}
+
+// THE MISSING SYNC LISTENER
+window.addEventListener('storage', (e) => {
+    if(e.key === 'codezilla_missions') { 
+        loadMissions(); 
+        renderMissions(); 
+        showToast('ARENA DATA SYNCHRONIZED', 'success'); 
+    }
+});
 
 // --- 4. TERMINAL TYPEWRITER EFFECT ---
 let typeInterval;
